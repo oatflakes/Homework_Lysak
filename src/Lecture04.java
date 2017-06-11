@@ -1,3 +1,5 @@
+import com.sun.istack.internal.NotNull;
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,8 +15,9 @@ public class Lecture04 {
         //task04();//наибольшая последовательность
         //task05();//простые числа
         //task06();//замена минимума и максимума
-        task07();//оставить только первые вхождения
-        //task02();//
+        //task07();//оставить только первые вхождения
+        //task08();//abc
+        task09();//ab
 
     }
 
@@ -300,7 +303,7 @@ public class Lecture04 {
 
     private static void task07() {
         int n = 100;
-        int x=10;
+        int x = 10;
         int[] array = new int[n];
         String str = "";
         int t = 0;
@@ -334,7 +337,7 @@ public class Lecture04 {
             }
         }
 
-        System.out.println("Проверка завершена, "+counter+" повторов заменено на 0");
+        System.out.println("Проверка завершена, " + counter + " повторов заменено на 0");
 
 //вывод массива на печать, строками по 10 элементов
         t = 0;
@@ -351,17 +354,151 @@ public class Lecture04 {
 
     }
 
+//Заменить нулями :
+//а) все отрицательные элементы;
+//б) все элементы, большие данного числа n;
+//в) все элементы, начиная с n1-го по n2-й (n1 ≤ n2)
 
+    private static void task08() {
+        int n = 100;
+        int x = 10;
+        int[] array = new int[n];
+        String str = "";
+        int t = 0;
+        String option = "";
+
+//наполнение массива
+        for (int i = 0; i < array.length; i++) {
+            array[i] = random.nextInt(x) - x / 2;
+        }
+//вывод массива на печать, строками по 10 элементов
+        t = 0;
+        System.out.print(" ");
+        for (int i = 0; i < array.length; i++) {
+            str = str + " " + array[i];
+            if (((i + 1) % 10 == 0 && i != 0)) {
+                System.out.println(t + ":" + str);
+                t = t + 10;
+                str = "";
+            }
+        }
+
+        System.out.println("Заменить нулями:\n" + "а) все отрицательные элементы;\n" +
+                "б) все элементы, большие данного числа n;\n" +
+                "в) все элементы, начиная с n1-го по n2-й (n1 ≤ n2)");
+
+        System.out.println("Выберите вариант (а, б, в)");
+        option = scanner.nextLine();
+        switch (option) {
+            case "а": {
+                for (int i = 0; i < array.length; i++) {
+                    if (array[i] < 0) {
+                        array[i] = 0;
+                    }
+                }
+                break;
+            }
+            case "б": {
+                System.out.print("Укажите максимально допустимое значение ");
+                int g = scanner.nextInt();
+                for (int i = 0; i < array.length; i++) {
+                    if (array[i] > g) {
+                        array[i] = 0;
+                    }
+                }
+                break;
+            }
+            case "в": {
+                System.out.print("Укажите начало диапазона ");
+                int g = scanner.nextInt();
+                System.out.print("Укажите конец диапазона ");
+                int h = scanner.nextInt();
+                for (int i = g - 1; i < h; i++) {
+                    array[i] = 0;
+                }
+                break;
+            }
+        }
+//вывод массива на печать, строками по 10 элементов
+        t = 0;
+        System.out.println("Обработанный массив");
+        System.out.print(" ");
+        for (int i = 0; i < array.length; i++) {
+            str = str + " " + array[i];
+            if (((i + 1) % 10 == 0 && i != 0)) {
+                System.out.println(t + ":" + str);
+                t = t + 10;
+                str = "";
+            }
+        }
+
+    }
+
+//Дан массив целых чисел. Удалить из него:
+//а) все четные элементы, стоящие на нечетных местах;
+//б) все элементы, кратные 3 или 5.
+
+    private static void task09() {
+        int n = 100;
+        int[] array = new int[n];
+        int t = 0;
+        String str = "";
+        int x = 10;
+
+//наполнение массива
+        for (int i = 0; i < array.length; i++) {
+            array[i] = random.nextInt(x);
+        }
+
+//вывод массива на печать, строками по 10 элементов
+        t = 0;
+        System.out.print(" ");
+        for (int i = 0; i < array.length; i++) {
+            str = str + " " + array[i];
+            if (((i + 1) % 10 == 0 && i != 0)) {
+                System.out.println(t + ":" + str);
+                t = t + 10;
+                str = "";
+            }
+        }
+
+        System.out.println("Что удалить?\n"+"а) четные элементы на нечетных местах\n"+"б) элементы, кратные 3 и 5\n");
+            String option = scanner.nextLine();
+if (option.equals("а")) {
+    for (int i = 1; i <= array.length; i++) {
+        if (array[i - 1] % 2 == 0 && (i) % 2 == 0) {
+            array[i - 1] = 0;
+        }
+    }
+}else if (option.equals("б")) {
+    for (int i = 0; i < array.length; i++) {
+        if(array[i]%3==0||array[i]%5==0){
+            array[i]=0;
+        }
+    }
+
+    }
+else{
+    System.out.println("Недопустимый выбор");
+}
+
+    //вывод массива на печать, строками по 10 элементов
+    t = 0;
+    System.out.print(" ");
+    for (int i = 0; i < array.length; i++) {
+        str = str + " " + array[i];
+        if (((i + 1) % 10 == 0 && i != 0)) {
+            System.out.println(t + ":" + str);
+            t = t + 10;
+            str = "";
+        }
+    }
+
+}
 }
 
 
-//        8. Заменить нулями :
-//а) все отрицательные элементы;
-//б) все элементы, большие данного числа n;
-//в) все элементы, начиная с n1-го по n2-й (n1 ≤ n2).
-//        9. Дан массив целых чисел. Удалить из него:
-//а) все четные элементы, стоящие на нечетных местах;
-//б) все элементы, кратные 3 или 5.
+
 
 
 
