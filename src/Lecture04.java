@@ -219,14 +219,13 @@ public class Lecture04 {
 
 //наполнение массива неповторяющимися значениями
         for (int i = 0; i < array.length; i++) {
-            flag=true;
+            flag = true;
             while (flag) {
-                t = random.nextInt(10000)+1;
-                if (i==0){
-                    array[i]=t;
-                    flag=false;
-                }
-                else {
+                t = random.nextInt(10000) + 1;
+                if (i == 0) {
+                    array[i] = t;
+                    flag = false;
+                } else {
                     for (int j = 0; j < i; j++) {
                         if (array[j] == t) {
                             break;
@@ -242,7 +241,7 @@ public class Lecture04 {
             }
         }
 //вывод массива на печать, строками по 10 элементов
-        t=0;
+        t = 0;
         for (int i = 0; i < array.length; i++) {
             str = str + " " + array[i];
             if (((i + 1) % 10 == 0 && i != 0)) {
@@ -252,40 +251,38 @@ public class Lecture04 {
             }
         }
 
-        int max=0;
-        int min=0;
-        int maxi=0;
-        int mini=n;
+        int max = 0;
+        int min = 0;
+        int maxi = 0;
+        int mini = n;
 //находим макс и мин значения, порядковые номера
 
-        int[] array1=array.clone();
+        int[] array1 = array.clone();
 
         Arrays.sort(array1);
-        max=array1[n-1];
-        min=array1[0];
+        max = array1[n - 1];
+        min = array1[0];
 
-        for (int i = 0; i <array.length ; i++) {
-            if (array[i]==max){
-                array[i]=0;
-                maxi=i;
-            }
-            else if(array[i]==min){
-                array[i]=0;
-                mini=i;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == max) {
+                array[i] = 0;
+                maxi = i;
+            } else if (array[i] == min) {
+                array[i] = 0;
+                mini = i;
             }
         }
 
 //замена элементов
-        array[maxi]=0;
-        array[mini]=0;
+        array[maxi] = 0;
+        array[mini] = 0;
 
 //вывод результатов
-        System.out.println("Максимальный элемент: "+max+" заменен на 0, пор.ном."+(maxi+1));
-        System.out.println("Минимальный элемент: "+min+" заменен на 0, пор.ном."+(mini+1));
+        System.out.println("Максимальный элемент: " + max + " заменен на 0, пор.ном." + (maxi + 1));
+        System.out.println("Минимальный элемент: " + min + " заменен на 0, пор.ном." + (mini + 1));
 
 
-
-        t=0;
+        t = 0;
         for (int i = 0; i < array.length; i++) {
             str = str + " " + array[i];
             if (((i + 1) % 10 == 0 && i != 0)) {
@@ -301,17 +298,19 @@ public class Lecture04 {
 // Заменить нулями все повторяющиеся элементы в массиве, оставив их первые вхождения, то есть
 // в массиве должны остаться только разные элементы.
 
-    private static void task07(){
+    private static void task07() {
         int n = 100;
+        int x=10;
         int[] array = new int[n];
         String str = "";
         int t = 0;
 //наполнение массива
         for (int i = 0; i < array.length; i++) {
-            array[i] = random.nextInt(100);
+            array[i] = random.nextInt(x);
 
         }
 //вывод массива на печать, строками по 10 элементов
+        System.out.print(" ");
         for (int i = 0; i < array.length; i++) {
             str = str + " " + array[i];
             if (((i + 1) % 10 == 0 && i != 0)) {
@@ -320,8 +319,37 @@ public class Lecture04 {
                 str = "";
             }
         }
-    }
 
+//поиск повторов, замена и подсчет их количества
+        int counter = 0;
+
+        for (int i = 1; i < array.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (array[i] == array[j]) {
+                    array[i] = 0;
+                    counter++;
+                    break;
+                }
+
+            }
+        }
+
+        System.out.println("Проверка завершена, "+counter+" повторов заменено на 0");
+
+//вывод массива на печать, строками по 10 элементов
+        t = 0;
+        System.out.print(" ");
+        for (int i = 0; i < array.length; i++) {
+            str = str + " " + array[i];
+            if (((i + 1) % 10 == 0 && i != 0)) {
+                System.out.println(t + ":" + str);
+                t = t + 10;
+                str = "";
+            }
+        }
+
+
+    }
 
 
 }
