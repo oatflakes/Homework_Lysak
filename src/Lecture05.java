@@ -133,8 +133,16 @@ public class Lecture05 {
                         if (player1Name.equals("Компьютер")) {
                             player1Move = random.nextInt(9);
                         } else {
-                            System.out.println(player1Name + ", ваш ход");
-                            player1Move = scanner.nextInt() - 1;
+                            boolean inputCorrect=false;
+                            do  {
+                                System.out.println(player1Name + ", ваш ход");
+                                player1Move = scanner.nextInt() - 1;
+                                inputCorrect=false;
+                                if(player1Move+1>9||player1Move+1<1){
+                                    System.out.println("Некорректный ввод");
+                                    inputCorrect=true;
+                                }
+                            } while (inputCorrect);
                         }
 
                         int k = 0;
@@ -191,7 +199,15 @@ public class Lecture05 {
                                 player2Move = random.nextInt(9);
                             } else {
                                 System.out.println(player2Name + ", ваш ход");
-                                player2Move = scanner.nextInt() - 1;
+                                boolean inputCorrect=false;
+                                do  {
+                                    player2Move = scanner.nextInt() - 1;
+                                    inputCorrect=false;
+                                    if(player2Move+1>9||player2Move+1<1){
+                                        System.out.println("Некорректный ввод");
+                                        inputCorrect=true;
+                                    }
+                                } while (inputCorrect);
                             }
 
                             int k = 0;
@@ -250,7 +266,6 @@ public class Lecture05 {
                         if (playerWinner.equals("")) {
                             playerWinner = player2Name;
                         }
-                        //System.out.println("Game over");
                         System.out.println("Победил " + playerWinner);
                         if (playerWinner.equals(player1CounterName)) {
                             player1Wins++;
@@ -262,7 +277,6 @@ public class Lecture05 {
                             gamesPlayed++;
                         }
                     } else if (sets == 9) {
-                        //System.out.println("Game over");
                         System.out.println("Ничья");
                         gamesPlayed++;
                         setFinished = true;
