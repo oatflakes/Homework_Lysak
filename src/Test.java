@@ -5,13 +5,12 @@ public class Test {
 
     public static void main(String[] args) {
 
-        for (int i = 0; i < 10; i++) {
-            int sum = 0;
-            sum = sum + i;
-            System.out.println("Cyммa: " + sum);
+String s = "Большая строка";
+String s1 = s.substring(8,13);
+        System.out.println(s1);
 
         }
     }
-}
+
 
 
