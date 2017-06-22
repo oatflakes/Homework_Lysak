@@ -8,12 +8,15 @@ public class Lecture05 {
 
     public static void main(String[] args) {
 
-        System.out.println("КРЕСТИКИ-НОЛИКИ");
-        int maxRounds = 5;                                                  //количество партий в одной игре
+        MyArray myArray = new MyArray();
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
-        MyArray myArray = new MyArray();
         MyMessage myMessage = new MyMessage();
+        myMessage.pStars();
+        System.out.println("Крестики-Нолики");
+        myMessage.pStars();
+        int maxRounds = 3;                                                  //количество партий в одной игре
+        System.out.println("Игра до  " + maxRounds + " побед.");
 
         String[][] array = {
                 {"(1)", "(2)", "(3)"},
@@ -34,7 +37,7 @@ public class Lecture05 {
         String player2CounterName = "";
         String playAgain = "yes";
 
-        while (playAgain.equals("yes") || playAgain.equals("да")) {
+        while (playAgain.equals("yes") || playAgain.equals("да") || playAgain.equals("1")) {
             do {
                 System.out.println("1 - Игра с компьютером, 2 - Игра вдвоем, 3 - Помощь, 4 - Выход");
                 option = scanner.nextInt();
@@ -118,12 +121,12 @@ public class Lecture05 {
                         }
                         while (!playerMoveCorrect) {
                             if (playerName.equals("Компьютер")) {
-                                    playerMove = myArray.checkIt(array, playerSymbol);
+                                playerMove = myArray.checkIt(array, playerSymbol);   //ход компьютера
                             } else {
                                 boolean inputCorrect = false;
                                 do {
                                     System.out.println(playerName + ", ваш ход");
-                                    playerMove = scanner.nextInt() - 1;
+                                    playerMove = scanner.nextInt() - 1;                  //ход игрока
                                     inputCorrect = false;
                                     if (playerMove + 1 > 9 || playerMove + 1 < 1) {
                                         System.out.println("Некорректный ввод");
@@ -134,8 +137,8 @@ public class Lecture05 {
 
                             int k = 0;
                             int l = 0;
-                            k = playerMove / 3;
-                            l = playerMove % 3;
+                            k = playerMove / 3;                                           //перевод номера поля
+                            l = playerMove % 3;                                           //в индексы массива
 
                             if (!array[k][l].equals("-")) {
                                 if (!playerName.equals("Компьютер")) System.out.println("Поле занято");
@@ -150,24 +153,7 @@ public class Lecture05 {
                         }
                         myArray.printIt(array);
 
-                        for (int j = 0; j < array.length; j++) {
-                            for (int k = 0; k < array[j].length; k++) {
-                                if (array[j][0].equals(playerSymbol) && array[j][1].equals(playerSymbol) && array[j][2].equals(playerSymbol)) {
-                                    setFinished = true;
-                                    break;
-                                }
-                                if (array[0][k].equals(playerSymbol) && array[1][k].equals(playerSymbol) && array[2][k].equals(playerSymbol)) {
-                                    setFinished = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if (array[0][0].equals(playerSymbol) && array[1][1].equals(playerSymbol) && array[2][2].equals(playerSymbol)) {
-                            setFinished = true;
-                        }
-                        if (array[2][0].equals(playerSymbol) && array[1][1].equals(playerSymbol) && array[0][2].equals(playerSymbol)) {
-                            setFinished = true;
-                        }
+                        setFinished = myArray.victory(array);                                 //проверка завершения партии
 
                         if (setFinished) {
                             playerWinner = playerName;
@@ -200,7 +186,7 @@ public class Lecture05 {
                     player1Name = player2Name;
                     player2Name = tempStr;
 
-                    myArray.clearIt(array);
+                    myArray.clearIt(array);                                             //статистика
                     myMessage.pStars();
                     System.out.println(player1CounterName + ": Побед - " + player1Wins + ", поражений - " + player1Defeats);
                     System.out.println(player2CounterName + ": Побед - " + player2Wins + ", поражений - " + player2Defeats);
@@ -231,7 +217,7 @@ public class Lecture05 {
 
 class MyArray {
     void printIt(String[][] array) {
-        for (String[] str : array) {                        //печать двухмерного массива
+        for (String[] str : array) {                        //печать массива
             for (String element : str) {
                 System.out.print(element + " ");
             }
@@ -247,13 +233,41 @@ class MyArray {
         }
     }
 
+    boolean victory(String[][] array) {                          //проверяем текущий массив на победу любого игрока
+        boolean setFinished1 = false;
+        for (int j = 0; j < array.length; j++) {
+            for (int k = 0; k < array[j].length; k++) {
+                if (!array[j][0].equals("-") && !array[j][1].equals("-") && !array[j][2].equals("-")
+                        && array[j][0].equals(array[j][1]) && array[j][1].equals(array[j][2])) {
+                    setFinished1 = true;
+                    break;
+                }
+                if (!array[0][k].equals("-") && !array[1][k].equals("-") && !array[2][k].equals("-")
+                        && array[0][k].equals(array[1][k]) && array[1][k].equals(array[2][k])) {
+                    setFinished1 = true;
+                    break;
+                }
+            }
+        }
+        if (!array[0][0].equals("-") && !array[1][1].equals("-") && !array[2][2].equals("-")
+                && array[0][0].equals(array[1][1]) && array[1][1].equals(array[2][2])) {
+            setFinished1 = true;
+        }
+        if (!array[2][0].equals("-") && !array[1][1].equals("-") && !array[0][2].equals("-")
+                && array[2][0].equals(array[1][1]) && array[1][1].equals(array[0][2])) {
+            setFinished1 = true;
+        }
+        return setFinished1;
+    }
+
     int checkIt(String[][] array, String mplayerSymbol) {       //метод для вычисления ходов компьютера
+        Random random = new Random();
         if (array[1][1].equals("-")) {
             return 4;                                           //приоритет 5-й ячейке
         }
-        for (int i = 0; i < 2; i++) {                           //в первой итерации переключается комбинация символов:
-            if (i == 1) {                                       //сначала проверка чтобы выиграть
-                if (mplayerSymbol.equals("X")) {                //затем проверка чтобы не проиграть
+        for (int i = 0; i < 2; i++) {
+            if (i == 1) {
+                if (mplayerSymbol.equals("X")) {
                     mplayerSymbol = "O";
                 } else {
                     mplayerSymbol = "X";
@@ -271,18 +285,18 @@ class MyArray {
                     String oxo = "";
                     String oxoDiagonal = "";
 
-                    for (int l = 0; l < 3; l++) {                   //формируются комбинации, сначала по строкам (k==0)
-                        if (k == 0) {                               //по одной диагонали
+                    for (int l = 0; l < 3; l++) {
+                        if (k == 0) {
                             oxo = oxo.concat(array[j][l]);
                             oxoDiagonal = oxoDiagonal.concat(array[l][l]);
-                        } else {                                    //затем по столбцам (k==1)
-                            oxo = oxo.concat(array[l][j]);          //и по другой диагонали
+                        } else {
+                            oxo = oxo.concat(array[l][j]);
                             oxoDiagonal = oxoDiagonal.concat(array[l][2 - l]);
                         }
                     }
 
-                    if (oxo.equals(param1)) {                       //полученные комбинации проверяются на соовтетствие
-                        shift = 0;                                  //выигрышным вариантам
+                    if (oxo.equals(param1)) {                       //полученные комбинации проверяются на соответствие
+                        shift = 0;
                     } else if (oxo.equals(param2)) {
                         shift = 1;
                     } else if (oxo.equals(param3)) {
@@ -316,15 +330,16 @@ class MyArray {
             }
         }
         int s = -1;
-
-        for (int i = 0; i < 3; i++) {                                       //если комбинаций нет, то
-            for (int j = 0; j < 3; j++) {                                   //первый попавшийся прочерк
-                if (array[i][j].equals("-")) {
-                    s = i * 3 + j;
-                    break;
-                }
+        while (s < 0) {
+            int sd = 0;
+            sd = random.nextInt(8)+1;
+            int x = 0;
+            int y = 0;
+            x = sd / 3;
+            y = sd % 3;
+            if (array[x][y].equals("-")) {                              //если комбинаций нет, то
+                s = sd;                                                 //перебор случайных значений
             }
-            if (s > -1) break;
         }
         return s;
     }
@@ -332,8 +347,8 @@ class MyArray {
 
 class MyMessage {
     void pHelp() {
-        System.out.println("Чтобы сделать ход, введите номер свободного поля, от 1 до 9.");
-        System.out.println("Побеждает тот, кто первым сумеет выиграть 5 партий.");  //должен быть параметр
+        System.out.println("Справка :)");
+        System.out.println("Чтобы сделать ход, введите номер свободного поля, от 1 до 9");
     }
 
     void pStars() {
