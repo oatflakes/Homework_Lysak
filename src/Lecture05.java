@@ -9,6 +9,7 @@ public class Lecture05 {
     public static void main(String[] args) {
 
         MyArray myArray = new MyArray();
+        MyInput myInput = new MyInput();
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
         MyMessage myMessage = new MyMessage();
@@ -46,8 +47,9 @@ public class Lecture05 {
                         System.out.println("ИГРА ПРОТИВ КОМПЬЮТЕРА");
                         mode = 1;
                         //if (userName.equals("")) {                      //Запомнить userName либо каждую новую игру
-                        System.out.println("Как вас зовут?");                      //заново спрашивать имя игрока
-                        userName = scanner.next();
+                        //System.out.println("Как вас зовут?");                      //заново спрашивать имя игрока
+                        userName = "Человек";
+                        //userName = scanner.next();
                         //}
                         break;
                     case 2:
@@ -125,14 +127,14 @@ public class Lecture05 {
                             } else {
                                 boolean inputCorrect = false;
                                 do {
-                                    System.out.println(playerName + ", ваш ход");
-                                    playerMove = scanner.nextInt() - 1;                  //ход игрока
-                                    inputCorrect = false;
+                                    playerMove = myInput.getInt(playerName+", ваш ход." , scanner,1,10);      // ход Игрока
                                     if (playerMove + 1 > 9 || playerMove + 1 < 1) {
-                                        System.out.println("Некорректный ввод");
+                                        System.out.println("Введите число от 1 до 9");
+                                        inputCorrect = false;
+                                    } else {
                                         inputCorrect = true;
                                     }
-                                } while (inputCorrect);
+                                } while (!inputCorrect);
                             }
 
                             int k = 0;
@@ -332,7 +334,7 @@ class MyArray {
         int s = -1;
         while (s < 0) {
             int sd = 0;
-            sd = random.nextInt(8)+1;
+            sd = random.nextInt(8) + 1;
             int x = 0;
             int y = 0;
             x = sd / 3;
@@ -343,6 +345,8 @@ class MyArray {
         }
         return s;
     }
+
+
 }
 
 class MyMessage {
@@ -353,5 +357,26 @@ class MyMessage {
 
     void pStars() {
         System.out.println("**************************");
+    }
+}
+
+
+class MyInput1 {
+
+    int returnInt(String mmplayerName) {
+        Scanner scanner = new Scanner(System.in);
+        boolean inputIsFigure;
+        int mmplayerMove = 0;
+        do {
+            System.out.println(mmplayerName + ", ваш ход");
+            try {
+                mmplayerMove = Integer.parseInt(scanner.next()) - 1;
+                inputIsFigure = true;
+            } catch (Exception e) {
+                System.out.println("Введите число");
+                inputIsFigure = false;
+            }
+        } while (!inputIsFigure);
+        return mmplayerMove;
     }
 }
