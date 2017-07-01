@@ -414,14 +414,35 @@ class MyInput {
                 }
             } while (!inputIsInt);
             if (inputIsInt) {
-                if (intOut > max + 1 || intOut < min) {
-                    System.out.println("Введите число от " + min + " до " + max);
-                    inputIsCorrect = false;
-                } else {
+                if (min == 0 && max == 0) {
                     inputIsCorrect = true;
+                } else {
+                    if (intOut > max + 1 || intOut < min) {
+                        System.out.println("Введите число от " + min + " до " + max);
+                        inputIsCorrect = false;
+                    } else {
+                        inputIsCorrect = true;
+                    }
                 }
             }
         }
         return (intOut);
+    }
+
+    double getDouble(String inputMessage, Scanner scanner) {
+        boolean inputIsDbl = false;
+        double dblOut = 0;
+        do {
+            System.out.println(inputMessage);
+            try {
+                dblOut = Double.parseDouble(scanner.next());
+                inputIsDbl = true;
+            } catch (Exception e) {
+                System.out.println("Введите число");
+                inputIsDbl = false;
+            }
+        } while (!inputIsDbl);
+
+        return (dblOut);
     }
 }

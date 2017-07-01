@@ -17,7 +17,7 @@ public class Lecture04 {
         String choice = "";
         boolean repeat = true;
 
-        System.out.println("Леция 4. Домашнее задание");
+        System.out.println("Лекция 4. Домашнее задание");
         while (repeat) {
             System.out.println("");
             System.out.println("Выберите задание 1-9");
@@ -234,27 +234,31 @@ public class Lecture04 {
         }
 
 //определяем, простое ли число и его индекс
-
-        boolean flag;
-
         for (int i = 0; i < array.length; i++) {
-            flag = false;
-            if (array[i] > 1) {
-                for (int j = 2; j < array[i]; j++) {
-                    if (array[i] % j == 0) {
-                        flag = true;
-                        break;
-                    }
-                }
-            }
+            boolean flag;
+            flag=isSimpleNum(array[i]);
             if (!flag) {
                 System.out.println("Простое число: " + array[i] + ", порядковый номер в массиве: " + (i + 1));
             }
         }
 
-
     }
 
+    public static boolean isSimpleNum(int a) {
+
+        boolean flag = false;
+        if (a > 1) {
+            for (int j = 2; j < a; j++) {
+                if (a % j == 0) {
+                    flag = true;
+                    break;
+                }
+            }
+        } else if (a == 1) {
+            return true;
+        }
+        return flag;
+    }
 
     private static void task06() {
         System.out.println("Дан массив, в котором все элементы различны. Заменить в нём нулём :");
