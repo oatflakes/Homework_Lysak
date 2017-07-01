@@ -5,6 +5,7 @@ public class Lecture06 {
     private static Random random = new Random();
     MyArrays myArrays = new MyArrays();
     private static MyInput myInput = new MyInput();
+
     private static Scanner scanner = new Scanner(System.in);
 
     public MyArrays getMyArrays() {
