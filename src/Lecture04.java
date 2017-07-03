@@ -246,16 +246,18 @@ public class Lecture04 {
 
     public static boolean isSimpleNum(int a) {
 
-        boolean flag = false;
+        boolean flag = true;
         if (a > 1) {
             for (int j = 2; j < a; j++) {
                 if (a % j == 0) {
-                    flag = true;
+                    flag = false;
                     break;
                 }
             }
         } else if (a == 1) {
             return true;
+        }else if(a<0){
+            return  false;
         }
         return flag;
     }

@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -21,9 +22,9 @@ public class Lecture06 {
         while (repeat) {
             System.out.println("");
             System.out.println("Выберите задание 1-5");
-            System.out.println(" 1. Программа для банка");
-            System.out.println(" 2. Конвертер валют");
-            System.out.println(" 3. Арифметические методы");
+            System.out.println(" 1. [Готово] Программа для банка");
+            System.out.println(" 2. [Готово] Конвертер валют");
+            System.out.println(" 3. [Готово] Арифметические методы");
             System.out.println(" 4. Работа с массивом 1");
             System.out.println(" 5. Работа с массивом 2");
             System.out.println("Exit: other");
@@ -65,8 +66,62 @@ public class Lecture06 {
                 "аргумента принимать сумму платежа, введенную экономистом банка. Метод\n" +
                 "выводит на экран информацию о состоянии кредита (сумма задолженности,\n" +
                 "сумма переплаты, сообщение об отсутствии долга).");
+        double totalSum = 0;
+        double remainedSum = 0;
+        int paymentCount = 0;
+        int paymentCounter = 0;
+
+        double payment = 0;
+        totalSum = (double) myInput.getInt("Введите сумму кредита, не более 1000000", scanner, 0, 1000000);
+        remainedSum = totalSum;
+        paymentCount = myInput.getInt("Введите количество платежей, от 2 до 24", scanner, 2, 24);
+        boolean creditClosed = false;
+        do {
+            remainedSum = remainedSum - payment;
+            creditDetailsPrint(totalSum, remainedSum, payment, paymentCount, paymentCounter);
+            if (remainedSum > 0) {
+                payment = myInput.getInt("Введите сумму платежа", scanner, 0, 100000);
+            } else {
+                creditClosed = true;
+                System.out.println("Кредит погашен");
+                if (remainedSum < 0) {
+                    System.out.println("Переплата всего " + -remainedSum);
+                }
+            }
+
+            paymentCounter++;
+
+        } while (!creditClosed);
+    }
+
+    private static void creditDetailsPrint(double totalSum, double remainedSum, double payment, int paymentCount, int paymentCounter) {
+        double credit = 0;
+        credit = paymentCounter * totalSum / paymentCount;
+        System.out.println("Сумма кредита: " + totalSum);
+        if (remainedSum >= 0) {
+            System.out.println("Тело кредита: " + remainedSum);
+        }
+        else {
+            System.out.println("Тело кредита 0.00");
+        }
+        System.out.println("Сумма задолженности согласно графику погашения: " + credit);
+        System.out.println("Погашено : " + (totalSum - remainedSum));
+        System.out.println("Совершено платежей: " + paymentCounter);
+        if (credit > (totalSum - remainedSum)) {
+            System.out.println("Сумма задолженности по кредиту " + (credit - (totalSum - remainedSum)));
+        } else if (credit < (totalSum - remainedSum)) {
+            System.out.println("Переплата по графику " + -(credit - (totalSum - remainedSum)));
+        } else {
+            System.out.println("Оплаты по графику");
+        }
 
     }
+
+    private static void creditCalculate() {
+
+
+    }
+
 
     private static void task02() {
         System.out.println("Напишите программу, которая будет выполнять конвертирование валют.\n" +
@@ -74,6 +129,38 @@ public class Lecture06 {
                 "конвертации в другую валюту. Организуйте вывод результата операции\n" +
                 "конвертирования валюты на экран.");
 
+        double amount = 0;
+        double exchangeRate = 0;
+        boolean flag = false;
+
+        while (!flag) {
+            amount = myInput.getDouble("Введите сумму в вашей валюте ", scanner);
+            if (amount <= 0) {
+                System.out.println("Введите положительное число");
+                flag = false;
+            } else {
+                flag = true;
+            }
+        }
+        flag = false;
+        while (!flag) {
+            exchangeRate = myInput.getDouble("Введите курс ", scanner);
+            if (exchangeRate < 0) {
+                System.out.println("Введите положительное число");
+                flag = false;
+            } else {
+                converter(amount, exchangeRate);
+                flag = true;
+            }
+        }
+
+
+    }
+
+    private static void converter(double amount, double exchangeRate) {
+        System.out.println("Сумма: " + amount);
+        System.out.println("Курс обмена: " + exchangeRate);
+        System.out.println("Эквивалент: " + amount * exchangeRate);
     }
 
     private static void task03() {
@@ -81,16 +168,42 @@ public class Lecture06 {
                 "1) является ли введенное число положительным или отрицательным.\n" +
                 "2) Является ли оно простым (используйте технику перебора значений).\n" +
                 "3) Делится ли на 2, 5, 3, 6, 9 без остатка.");
-        int q=myInput.getInt("Введите число ",scanner,0,0);
+        int q = myInput.getInt("Введите число ", scanner, 0, 0);
         arythmetic(q);
+    }
+
+    private static void arythmetic(int a) {
+        //a = myInput.getInt("Введите целое число", scanner, 0, 0);
+        if (a >= 0) {
+            System.out.println("1) Число " + a + " это положительное число");
+        } else {
+            System.out.println("1) Число " + a + " это отрицательное число");
+        }
+        boolean check;
+        check = Lecture04.isSimpleNum(a);
+        if (check) {
+            System.out.println("2) Число " + a + " это простое число");
+        } else {
+            System.out.println("2) Число " + a + " не является простым");
+        }
+        System.out.print("3) \n");
+        int[] array = {2, 5, 3, 6, 9};
+        for (int i = 0; i < array.length; i++) {
+            if (a % array[i] == 0) {
+                System.out.println("Число " + a + " делится на " + array[i]);
+            }
+        }
     }
 
     private static void task04() {
         System.out.println("Напишите метод, который в качестве аргумента принимает одномерный\n" +
                 "целочисленный массив, и сортирует его “Методом пузырька”. Также\n" +
                 "напишите отдельный метод, для вывода массива на экран.");
-
     }
+
+
+
+
 
     private static void task05() {
         System.out.println("Напишите метод, который принимает 2 аргумента : целочисленный массив, и\n" +
@@ -100,27 +213,6 @@ public class Lecture06 {
                 "аргумента принимает массив элементов типа double, а в качестве второго\n" +
                 "аргумента принимает аргумент типа double .");
 
-    }
-
-    public static void arythmetic(int a) {
-        a = myInput.getInt("Введите целое число", scanner, 0, 0);
-        if (a >= 0) {
-            System.out.println("1) Число " + a + " это положительное число");
-        } else {
-            System.out.println("1) Число " + a + " это отрицательное число");
-        }
-        if (Lecture04.isSimpleNum(a)) {
-            System.out.println("2) Число " + a + " это простое число");
-        } else {
-            System.out.println("2) Число " + a + "не является простым");
-        }
-        System.out.print("3) ");
-        int[] array = {2,5,3,6,9};
-        for (int i = 0; i < array.length; i++) {
-            if (a/array[i]==0){
-                System.out.println("Число "+a+ " делится на" +array[i]);
-            }
-        }
     }
 
 

@@ -40,7 +40,7 @@ public class TicTacToe1 {
 
         while (playAgain.equals("yes") || playAgain.equals("да") || playAgain.equals("1")) {
             do {
-                option = myInput.getInt("1 - Игра с компьютером, 2 - Игра вдвоем, 3 - Помощь, 4 - Выход", scanner, 1, 5);
+                option = myInput.getInt("1 - Игра с компьютером, 2 - Игра вдвоем, 3 - Помощь, 4 - Выход, 5 - Apple vs Google", scanner, 1, 5);
                 switch (option) {
                     case 1:
                         System.out.println("ИГРА ПРОТИВ КОМПЬЮТЕРА");
