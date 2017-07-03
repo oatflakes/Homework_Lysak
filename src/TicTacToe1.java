@@ -413,18 +413,18 @@ class MyInput {
                     inputIsInt = false;
                 }
             } while (!inputIsInt);
-            if (inputIsInt) {
-                if (min == 0 && max == 0) {
-                    inputIsCorrect = true;
+
+            if (min == 0 && max == 0) {
+                inputIsCorrect = true;
+            } else {
+                if (intOut > max + 1 || intOut < min) {
+                    System.out.println("Введите число от " + min + " до " + max);
+                    inputIsCorrect = false;
                 } else {
-                    if (intOut > max + 1 || intOut < min) {
-                        System.out.println("Введите число от " + min + " до " + max);
-                        inputIsCorrect = false;
-                    } else {
-                        inputIsCorrect = true;
-                    }
+                    inputIsCorrect = true;
                 }
             }
+
         }
         return (intOut);
     }
