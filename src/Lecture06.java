@@ -18,15 +18,15 @@ public class Lecture06 {
         String choice = "";
         boolean repeat = true;
 
-        System.out.println("Лекция 6. Методы Домашнее задание.");
+        System.out.println("Лекция 6. Методология ООП. Часть 1. Домашнее задание.");
         while (repeat) {
             System.out.println("");
             System.out.println("Выберите задание 1-5");
             System.out.println(" 1. [Готово] Программа для банка");
             System.out.println(" 2. [Готово] Конвертер валют");
             System.out.println(" 3. [Готово] Арифметические методы");
-            System.out.println(" 4. Работа с массивом 1");
-            System.out.println(" 5. Работа с массивом 2");
+            System.out.println(" 4. [Готово] Работа с массивом 1");
+            System.out.println(" 5. [Готово] Работа с массивом 2");
             System.out.println("Exit: other");
             System.out.println("");
             try {
@@ -80,6 +80,9 @@ public class Lecture06 {
             remainedSum = remainedSum - payment;
             creditDetailsPrint(totalSum, remainedSum, payment, paymentCount, paymentCounter);
             if (remainedSum > 0) {
+                if(paymentCount<paymentCounter){
+                    System.out.println("(!)Начисляется пеня(!)");
+                }
                 payment = myInput.getInt("Введите сумму платежа", scanner, 0, 100000);
             } else {
                 creditClosed = true;
@@ -100,8 +103,7 @@ public class Lecture06 {
         System.out.println("Сумма кредита: " + totalSum);
         if (remainedSum >= 0) {
             System.out.println("Тело кредита: " + remainedSum);
-        }
-        else {
+        } else {
             System.out.println("Тело кредита 0.00");
         }
         System.out.println("Сумма задолженности согласно графику погашения: " + credit);
@@ -199,10 +201,40 @@ public class Lecture06 {
         System.out.println("Напишите метод, который в качестве аргумента принимает одномерный\n" +
                 "целочисленный массив, и сортирует его “Методом пузырька”. Также\n" +
                 "напишите отдельный метод, для вывода массива на экран.");
+        int[] array = new int[20];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = random.nextInt(10000) - 5000;
+        }
+        printArray(array);
+        bubbleSort(array);
+        System.out.println("Результат сортировки:");
+        printArray(array);
     }
 
+    private static void bubbleSort(int array[]) {
+        int tmp = 0;
+        boolean sorted;
+        do {
+            sorted = false;
+            for (int i = 0; i < array.length - 1; i++) {
+                if (array[i] > array[i + 1]) {
+                    tmp = array[i];
+                    array[i] = array[i + 1];
+                    array[i + 1] = tmp;
+                    sorted = true;
+                }
+            }
+        }
+        while (sorted);
+    }
 
+    private static void printArray(int array[]) {
+        System.out.println(Arrays.toString(array));
+    }
 
+    private static void printArray(double array[]) {
+        System.out.println(Arrays.toString(array));
+    }
 
 
     private static void task05() {
@@ -212,7 +244,53 @@ public class Lecture06 {
                 "не содержит). Создайте перегрузку этого метода, который в качестве первого\n" +
                 "аргумента принимает массив элементов типа double, а в качестве второго\n" +
                 "аргумента принимает аргумент типа double .");
+        double[] array = new double[20];
+        int[] array1 = new int[20];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = random.nextDouble();
+            array1[i] = random.nextInt(10000) - 5000;
+        }
+        System.out.println("Первый массив");
+        printArray(array);
+        double num = 0;
+        num = myInput.getDouble("Введите число", scanner);
+        boolean result;
+        result = numberIsInArray(array, num);
+        if (result) {
+            System.out.println("Число " + num + " содержится в первом массиве");
+        } else {
+            System.out.println("Число " + num + " не содержится в первом массиве");
+        }
 
+        int num1 = 0;
+        System.out.println("Второй массив");
+        printArray(array1);
+        num1 = myInput.getInt("Введите число", scanner, 0, 0);
+        result = numberIsInArray(array1, num1);
+        if (result) {
+            System.out.println("Число " + num1 + " содержится во втором массиве");
+        } else {
+            System.out.println("Число " + num1 + " не содержится во втором массиве");
+        }
+
+    }
+
+    private static boolean numberIsInArray(int array[], int num) {
+        for (int element : array) {
+            if (element == num) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean numberIsInArray(double array[], double num) {
+        for (double element : array) {
+            if (element == num) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
