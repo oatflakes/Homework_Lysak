@@ -1,69 +1,8 @@
+package Lecture07.Lecture07Classes;
+
 import java.util.Scanner;
 
-/**
- * Created by DL on 06-07-17.
- */
-public class Task0701 {
-    public static void main(String[] args) {
-        SimpleFraction r1 = new SimpleFraction(5, 12);
-        SimpleFraction r2 = new SimpleFraction(3);
-        SimpleFraction r3 = new SimpleFraction(1, 3);
-        SimpleFraction r4;
-
-        r1.showFraction();
-        System.out.println();
-        r2.showFraction();
-        System.out.println();
-        r3.showFraction();
-        System.out.println();
-
-        r1.showFraction();
-        System.out.print("+");
-        r2.showFraction();
-        System.out.print("=");
-        r4 = SimpleFraction.addFraction(r1, r2);
-        r4.showFraction();
-
-        System.out.println();
-
-        r2.showFraction();
-        System.out.print("-");
-        r3.showFraction();
-        System.out.print("=");
-        r4 = SimpleFraction.subFractions(r2, r3);
-        r4.showFraction();
-
-        System.out.println();
-
-        r1.showFraction();
-        System.out.print("*");
-        r2.showFraction();
-        System.out.print("*");
-        r3.showFraction();
-        System.out.print("=");
-        r4 = SimpleFraction.prodFractions(r1, r2, r3);
-        r4.showFraction();
-
-        System.out.println();
-
-        System.out.print("(");
-        r1.showFraction();
-        System.out.print("+");
-        r2.showFraction();
-        System.out.print(")*(");
-        r1.showFraction();
-        System.out.print("+");
-        r3.showFraction();
-        System.out.print(")=");
-        r4 = SimpleFraction.prodFractions(SimpleFraction.addFraction(r1, r2), SimpleFraction.addFraction(r1, r3));
-        r4.showFraction();
-        System.out.println();
-        System.out.println("Обратная дробь");
-        r4.revFraction().showFraction();
-    }
-}
-
-class SimpleFraction {
+public class SimpleFraction {
     int num;
     int denom;
 
@@ -71,17 +10,17 @@ class SimpleFraction {
 
     }
 
-    SimpleFraction(int num) {
+    public SimpleFraction(int num) {
         this.num = num;
         this.denom = 1;
     }
 
-    SimpleFraction(int num, int denom) {
+    public SimpleFraction(int num, int denom) {
         this.num = num;
         this.denom = denom;
     }
 
-    private int getNum() {
+    public int getNum() {
         return num;
     }
 
@@ -89,7 +28,7 @@ class SimpleFraction {
         this.num = num;
     }
 
-    private int getDenom() {
+    public int getDenom() {
         return denom;
     }
 
@@ -97,20 +36,20 @@ class SimpleFraction {
         this.denom = denom;
     }
 
-    SimpleFraction revFraction() {
+    public SimpleFraction revFraction() {
         SimpleFraction simpleFraction;
         return simpleFraction = new SimpleFraction(denom, num);
     }
 
-    void showFraction() {
-        if (denom == 1) {
+    public void showFraction() {
+        if (denom == 1 || num == 0) {
             System.out.print(num);
         } else {
             System.out.print(num + "/" + denom);
         }
     }
 
-    private void reduceFraction() {
+    public void reduceFraction() {
         if (denom == num) {
             num = 1;
             denom = 1;
@@ -128,9 +67,10 @@ class SimpleFraction {
         }
     }
 
-    static SimpleFraction addFraction(SimpleFraction... fractions) {
+    public static SimpleFraction addFraction(SimpleFraction... fractions) {
         int mnum = fractions[0].getNum();
         int mdenom = fractions[0].getDenom();
+
 
         for (int i = 1; i < fractions.length; i++) {
             mnum = mnum * fractions[i].getDenom() + fractions[i].getNum() * mdenom;
@@ -146,7 +86,7 @@ class SimpleFraction {
         return sumFractions;
     }
 
-    static SimpleFraction subFractions(SimpleFraction frac1, SimpleFraction frac2) {
+    public static SimpleFraction subFractions(SimpleFraction frac1, SimpleFraction frac2) {
         int mnum = 0;
         int mdenom = 0;
 
@@ -158,7 +98,7 @@ class SimpleFraction {
         return substractedFractions;
     }
 
-    static SimpleFraction prodFractions(SimpleFraction... fractions) {
+    public static SimpleFraction prodFractions(SimpleFraction... fractions) {
         int mnum = 1;
         int mdenum = 1;
         for (int i = 0; i < fractions.length; i++) {
@@ -170,7 +110,7 @@ class SimpleFraction {
         return prodFraction;
     }
 
-    static SimpleFraction inputFraction() {
+    public static SimpleFraction inputFraction() {
         Scanner scanner = new Scanner(System.in);
         int mnum = 0;
         int mdenom = 0;
@@ -184,23 +124,24 @@ class SimpleFraction {
             mnum = Integer.getInteger(strFraction);
             mdenom = 1;
         }
-        SimpleFraction simpleFraction = new SimpleFraction(mnum,mdenom);
+        SimpleFraction simpleFraction = new SimpleFraction(mnum, mdenom);
         return simpleFraction;
 
     }
-    static SimpleFraction inputFraction(String strFraction) {
+
+    public static SimpleFraction inputFraction(String strFraction) {
         int mnum = 0;
         int mdenom = 0;
         if (strFraction.contains("/")) {
             int endInd = 0;
-            endInd = strFraction.indexOf('/', 0) ;
+            endInd = strFraction.indexOf('/', 0);
             mnum = Integer.parseInt(strFraction.substring(0, endInd).trim());
             mdenom = Integer.parseInt(strFraction.substring(endInd + 1).trim());
         } else {
             mnum = Integer.parseInt(strFraction.trim());
             mdenom = 1;
         }
-        SimpleFraction simpleFraction = new SimpleFraction(mnum,mdenom);
+        SimpleFraction simpleFraction = new SimpleFraction(mnum, mdenom);
         return simpleFraction;
 
     }

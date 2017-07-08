@@ -1,11 +1,17 @@
+package Lecture06;
+
+import MyClasses.MyArrays;
+import MyClasses.MyInput;
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
+import Lecture04.Lecture04;
 
 public class Lecture06 {
     private static Random random = new Random();
-    MyArrays myArrays = new MyArrays();
-    private static MyInput myInput = new MyInput();
+    public MyArrays myArrays = new MyArrays();
+    public static MyInput myInput = new MyInput();
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -80,7 +86,7 @@ public class Lecture06 {
             remainedSum = remainedSum - payment;
             creditDetailsPrint(totalSum, remainedSum, payment, paymentCount, paymentCounter);
             if (remainedSum > 0) {
-                if(paymentCount<paymentCounter){
+                if (paymentCount < paymentCounter) {
                     System.out.println("(!)Начисляется пеня(!)");
                 }
                 payment = myInput.getInt("Введите сумму платежа", scanner, 0, 100000);
@@ -174,7 +180,7 @@ public class Lecture06 {
         arythmetic(q);
     }
 
-    private static void arythmetic(int a) {
+    public  static void arythmetic(int a) {
         //a = myInput.getInt("Введите целое число", scanner, 0, 0);
         if (a >= 0) {
             System.out.println("1) Число " + a + " это положительное число");

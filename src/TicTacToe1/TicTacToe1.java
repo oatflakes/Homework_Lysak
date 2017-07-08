@@ -1,7 +1,6 @@
+package TicTacToe1;
 
-//Написать игру крестики-нолики. В игре должны быть 2 режима : с компьютером, и с человеком.
-//Также, должен быть счетчик поражений и побед, отдельно для игры с компьютером, отдельно для игры с человеком.
-//вторая версия, используются объекты player1 и player2. Исправлен MyInput
+import MyClasses.MyInput;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -9,11 +8,11 @@ import java.util.Scanner;
 public class TicTacToe1 {
 
     public static void main(String[] args) {
-        int maxRounds = 2;                                                  //количество партий в одной игре
+        int maxRounds = 5;                                                  //количество партий в одной игре
 
         PlayField playField = new PlayField();
         Scanner scanner = new Scanner(System.in);
-        MyInput myInput = new MyInput();
+        MyInputTic myInputTic = new MyInputTic();
         Random random = new Random();
         DisplayMessage displayMessage = new DisplayMessage();
         displayMessage.pStars();
@@ -40,7 +39,7 @@ public class TicTacToe1 {
 
         while (playAgain.equals("yes") || playAgain.equals("да") || playAgain.equals("1")) {
             do {
-                option = myInput.getInt("1 - Игра с компьютером, 2 - Игра вдвоем, 3 - Помощь, 4 - Выход, 5 - Apple vs Google", scanner, 1, 5);
+                option = myInputTic.getInt("1 - Игра с компьютером, 2 - Игра вдвоем, 3 - Помощь, 4 - Выход, 5 - Apple vs Google", scanner, 1, 5);
                 switch (option) {
                     case 1:
                         System.out.println("ИГРА ПРОТИВ КОМПЬЮТЕРА");
@@ -140,7 +139,7 @@ public class TicTacToe1 {
                             if (!playerIsHuman) {
                                 playerMove = playField.computerMove(array, symbol);   //ход компьютера
                             } else {
-                                playerMove = myInput.getInt(userName + ", ваш ход", scanner, 1, 9) - 1;      //ход игрока
+                                playerMove = myInputTic.getInt(userName + ", ваш ход", scanner, 1, 9) - 1;      //ход игрока
                             }
 
                             int k = playerMove / 3;                                           //перевод номера поля
@@ -208,7 +207,7 @@ public class TicTacToe1 {
                 displayMessage.pStars();
                 System.out.println("Отлично! " + winner + " выиграл игру!!!");
                 displayMessage.pStars();
-                playAgain = myInput.getString("Хотите сыграть еще? (Да/Нет)", scanner);
+                playAgain = myInputTic.getString("Хотите сыграть еще? (Да/Нет)", scanner);
                 playAgain = playAgain.toLowerCase();
             }
         }                                                                           //конец игры
@@ -391,9 +390,8 @@ class DisplayMessage {
     }
 }
 
-class MyInput {
+class MyInputTic {
     String getString(String inputMessage, Scanner scanner) {
-        String str = "";
         System.out.println(inputMessage);
         return scanner.next();
     }
@@ -427,22 +425,5 @@ class MyInput {
 
         }
         return (intOut);
-    }
-
-    double getDouble(String inputMessage, Scanner scanner) {
-        boolean inputIsDbl = false;
-        double dblOut = 0;
-        do {
-            System.out.println(inputMessage);
-            try {
-                dblOut = Double.parseDouble(scanner.next());
-                inputIsDbl = true;
-            } catch (Exception e) {
-                System.out.println("Введите число");
-                inputIsDbl = false;
-            }
-        } while (!inputIsDbl);
-
-        return (dblOut);
     }
 }

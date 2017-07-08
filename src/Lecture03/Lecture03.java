@@ -1,11 +1,15 @@
+package Lecture03;
+import MyClasses.MyArrays;
+import MyClasses.MyInput;
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Lecture03 {
     private static Random random = new Random();
-    MyArrays myArrays = new MyArrays();
-    private static MyInput myInput = new MyInput();
+    public MyArrays myArrays = new MyArrays();
+    public static MyInput myInput = new MyInput();
     private static Scanner scanner = new Scanner(System.in);
 
     public MyArrays getMyArrays() {
